@@ -15,9 +15,9 @@ class DashboardViewViewModel {
     
     private let disposeBag = DisposeBag()
     private let searchResultSubject = PublishSubject<SearchResult>()
-    private var webServices: WeatherWebservices!
+    private var webServices: WeatherWebservicesProtocol!
     
-    init(webServices: WeatherWebservices) {
+    init(webServices: WeatherWebservicesProtocol) {
         self.webServices = webServices
     }
     
@@ -53,7 +53,9 @@ class DashboardViewViewModel {
             .throttle(.milliseconds(500),
                       scheduler: MainScheduler.instance)
             .flatMapLatest {[weak self] (searchText) -> Observable<SearchResult> in
-                guard let strongSelf = self, let unwrapText = searchText, unwrapText.count >= 3 else {
+                guard let strongSelf = self,
+                      let unwrapText = searchText,
+                      SearchTextValidator.validate(searchText: unwrapText) else {
                     return Observable.create { observer in
                         observer.on(.next(SearchResult(list: [], error: nil)))
                         observer.on(.completed)

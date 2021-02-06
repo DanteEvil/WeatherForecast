@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import Moya
 
-class WeatherWebservices {
+class WeatherWebservices: WeatherWebservicesProtocol {
     let provider = MoyaProvider<WeatherAPIs>()
     
     func fetchWeatherForeCastOf(city: String, completion: @escaping ((Result<Weather?, Error>) -> Void)) {

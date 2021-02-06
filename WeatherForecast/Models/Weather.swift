@@ -13,11 +13,11 @@ struct CachedWeatherResult: Codable {
     let weather: Weather!
 }
 
-struct Weather: Codable {
+struct Weather: Codable, Equatable {
     let list: [WeatherByDay]!
 }
 
-struct WeatherByDay: Codable {
+struct WeatherByDay: Codable, Equatable {
     let date: Double!
     let temperature: Double!
     let pressure: Int!
@@ -65,7 +65,7 @@ struct WeatherByDay: Codable {
     }
 }
 
-struct WeatherDescription: Codable {
+struct WeatherDescription: Codable, Equatable {
     let id: Int!
     let main: String!
     let description: String!
